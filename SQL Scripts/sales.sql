@@ -34,3 +34,14 @@ from [dbo].[sales_data_sample]
 where YEAR_ID = 2004 and MONTH_ID = 11 --change year to see the rest
 group by  MONTH_ID, PRODUCTLINE
 order by 3 desc
+
+select 
+		CUSTOMERNAME, 
+		sum(sales) MonetaryValue,
+		avg(sales) AvgMonetaryValue,
+		count(ORDERNUMBER) Frequency,
+		max(ORDERDATE) last_order_date,
+		(select max(ORDERDATE) from [dbo].[sales_data_sample]) max_order_date,
+		DATEDIFF(DD, max(ORDERDATE), (select max(ORDERDATE) from [dbo].[sales_data_sample])) Recency
+	from [dbo].[sales_data_sample]
+	group by CUSTOMERNAME
